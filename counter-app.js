@@ -5,6 +5,7 @@
 import { LitElement, html, css } from "lit";
 import { DDDSuper } from "@haxtheweb/d-d-d/d-d-d.js";
 import { I18NMixin } from "@haxtheweb/i18n-manager/lib/I18NMixin.js";
+import { ref } from "lit/directives/ref.js";
 
 /**
  * `counter-app`
@@ -43,8 +44,8 @@ export class CounterApp extends DDDSuper(I18NMixin(LitElement)) {
       ...super.properties,
       title: { type: String },
       count: { type: Number, reflect: true },
-      min: { type: Number },
-      max: { type: Number },
+      min: { type: Number, reflect: true },
+      max: { type: Number, reflect: true },
     };
   }
 
@@ -81,6 +82,8 @@ export class CounterApp extends DDDSuper(I18NMixin(LitElement)) {
       }
       .btn {
         margin: var(--ddd-spacing-1);
+        padding: var(--ddd-spacing-2) var(--ddd-spacing-4);
+        font-size: var(--ddd-font-size-m);
       }
     `];
   }
@@ -134,8 +137,8 @@ makeItRain() {
       <div class="wrapper">
       <!-- disable button when count reaches min or max, otherwise do nothing -->
       <h3 class="${this.count === this.min ? 'min' : this.count === this.max ? 'max' : ''}">${this.count}</h3>
-      <button class="btn" @click="${this.decrement}" ?disabled="${this.min === this.count}">-</button>
-      <button class="btn" @click="${this.increment}" ?disabled="${this.max === this.count}">+</button>
+      <button class="btn" @click="${this.decrement}" ?disabled="${this.min === this.count}" title="Decrease count">-</button>
+      <button class="btn" @click="${this.increment}" ?disabled="${this.max === this.count}" title="Increase count">+</button>
       <slot></slot>
       </div>
     </confetti-container>
